@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:wallpaper_app/pages/home_widgets/bottom_menu.dart';
+import 'package:wallpaper_app/pages/home_widgets/gradient_background.dart';
+import 'package:wallpaper_app/pages/home_widgets/list_wallpapers.dart';
 import 'package:wallpaper_app/pages/home_widgets/main_card.dart';
 
 class HomePage extends StatefulWidget {
@@ -8,15 +11,17 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<Widget> coluna1 = [];
-  List<Widget> coluna2 = [];
+  List<Widget> column1 = [];
+  List<Widget> column2 = [];
+
+  final int qtdWallpapers = 6;
 
   void populateColumns() {
-    for (int i = 1; i <= 6; i++) {
+    for (int i = 1; i <= qtdWallpapers; i++) {
       if (i.isEven)
-        coluna1.add(MainCard(image: 'assets/wall_${i.toString()}.jpg'));
+        column1.add(MainCard(image: 'assets/wall_${i.toString()}.jpg'));
       else
-        coluna2.add(MainCard(image: 'assets/wall_${i.toString()}.jpg'));
+        column2.add(MainCard(image: 'assets/wall_${i.toString()}.jpg'));
     }
   }
 
@@ -29,82 +34,21 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Color(0xff0e0023),
-              Color(0xff3a1e54),
-            ],
-          ),
-        ),
+      body: MainGradientBackground(
         child: SafeArea(
           child: Column(
             children: [
 
               // LIST OF WALLPAPERS
               Expanded(
-                child: SingleChildScrollView(
-                  child: Container(
-                    padding: EdgeInsets.fromLTRB(15, 35, 15, 15),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-
-                        Text('Wallpapers', style: TextStyle(color: Colors.white, fontSize: 38, fontWeight: FontWeight.bold),),
-                        Text('8 wallpapers available', style: TextStyle(color: Colors.white, fontSize: 16),),
-
-                        // WALLPAPERS
-                        SizedBox(height: 25),
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-
-                            Expanded(
-                              child: Column(
-                                children: coluna1
-                              ),
-                            ),
-                            
-                            SizedBox(
-                              width: 15,
-                            ),
-                            Expanded(
-                              child: Column(
-                                children: coluna2
-                              ),
-                            ),
-
-                          ],
-                        ),
-
-                      ],
-                    ),
-                  ),
-                ),
+                child: ListWallpapers(
+                  column1: column1,
+                  column2: column2,
+                  qtdWallpapers: qtdWallpapers,
+                )
               ),
 
-              Container(
-                width: MediaQuery.of(context).size.width,
-                padding: EdgeInsets.symmetric(vertical: 15),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: Color(0xff682279),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-
-                    Icon(Icons.replay_outlined, size: 30, color: Colors.white,),
-                    Icon(Icons.replay_outlined, size: 30, color: Colors.white,),
-                    Icon(Icons.replay_outlined, size: 30, color: Colors.white,),
-                    Icon(Icons.replay_outlined, size: 30, color: Colors.white,),
-
-                  ],
-                ),
-              ),
+              MainBottomMenu(),
 
             ],
           ),
