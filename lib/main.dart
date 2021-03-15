@@ -1,8 +1,10 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:flutter/services.dart';
 
-void main() {
+void main() async {
   runApp(MyApp());
+  await SystemChrome.setEnabledSystemUIOverlays([]);
 }
 
 class MyApp extends StatelessWidget {
@@ -11,6 +13,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
@@ -21,56 +24,92 @@ class MyApp extends StatelessWidget {
 
 class HomePage extends StatelessWidget {
 
-  List<Map<String, dynamic>> info = [
-    {
-      'y': 2,
-      'color': Colors.blue
-    },
-    {
-      'y': 3,
-      'color': Colors.purple
-    },
-    {
-      'y': 3,
-      'color': Colors.pink
-    },
-    {
-      'y': 3,
-      'color': Colors.green
-    },
-  ];
+  List<Widget> coluna1 = [];
+  List<Widget> coluna2 = [];
 
   @override
   Widget build(BuildContext context) {
+
+    for (int i = 1; i <= 6; i++) {
+      if (i.isEven)
+        coluna1.add(MainCard(image: 'assets/wall_${i.toString()}.jpg'));
+      else
+        coluna2.add(MainCard(image: 'assets/wall_${i.toString()}.jpg'));
+    }
+
     return Scaffold(
-      appBar: AppBar(),
-      body: SingleChildScrollView(
-        child: Container(
-          padding: EdgeInsets.all(10),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Color(0xff0e0023),
+              Color(0xff3a1e54),
+            ],
+          ),
+        ),
+        child: SafeArea(
+          child: Column(
             children: [
 
+              // LIST OF WALLPAPERS
               Expanded(
-                child: Column(
-                  children: [
+                child: SingleChildScrollView(
+                  child: Container(
+                    padding: EdgeInsets.fromLTRB(15, 35, 15, 15),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
 
-                    MainCard(),
-                    MainCard(y: 2,),
+                        Text('Wallpapers', style: TextStyle(color: Colors.white, fontSize: 38, fontWeight: FontWeight.bold),),
+                        Text('8 wallpapers available', style: TextStyle(color: Colors.white, fontSize: 16),),
 
-                  ],
+                        // WALLPAPERS
+                        SizedBox(height: 25),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+
+                            Expanded(
+                              child: Column(
+                                children: coluna1
+                              ),
+                            ),
+                            
+                            SizedBox(
+                              width: 15,
+                            ),
+                            Expanded(
+                              child: Column(
+                                children: coluna2
+                              ),
+                            ),
+
+                          ],
+                        ),
+
+                      ],
+                    ),
+                  ),
                 ),
               ),
-              
-              SizedBox(
-                width: 10,
-              ),
-              Expanded(
-                child: Column(
+
+              Container(
+                width: MediaQuery.of(context).size.width,
+                padding: EdgeInsets.symmetric(vertical: 15),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  color: Color(0xff682279),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
 
-                    MainCard(y: 3,),
-                    MainCard(y: 0.5,),
+                    Icon(Icons.replay_outlined, size: 30, color: Colors.white,),
+                    Icon(Icons.replay_outlined, size: 30, color: Colors.white,),
+                    Icon(Icons.replay_outlined, size: 30, color: Colors.white,),
+                    Icon(Icons.replay_outlined, size: 30, color: Colors.white,),
 
                   ],
                 ),
@@ -86,16 +125,35 @@ class HomePage extends StatelessWidget {
 
 class MainCard extends StatelessWidget {
 
-  final double y;
-  MainCard({this.y = 1.5});
+  final String image;
+  MainCard({this.image = 'assets/wall_1.jpg'});
+
+  double getRandom() {
+    final double y = Random().nextInt(250)/100;
+    if (y < 1.2)
+      return getRandom();
+    else
+      return y;
+  }
 
   @override
   Widget build(BuildContext context) {
+
+    final double y = getRandom();
+
     return AspectRatio(
       aspectRatio: 1/y,
       child: Container(
-        margin: EdgeInsets.only(bottom: 10),
-        color: Colors.blue,
+        margin: EdgeInsets.only(bottom: 15),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          image: DecorationImage(
+            fit: BoxFit.cover,
+            image: AssetImage(
+              this.image
+            ),
+          )
+        ),
       ),
     );
   }
