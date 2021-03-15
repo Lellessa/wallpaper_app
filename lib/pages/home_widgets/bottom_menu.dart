@@ -14,10 +14,10 @@ class MainBottomMenu extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
 
-          Icon(Icons.replay_outlined, size: 30, color: Colors.white,),
-          Icon(Icons.replay_outlined, size: 30, color: Colors.white,),
-          Icon(Icons.replay_outlined, size: 30, color: Colors.white,),
-          Icon(Icons.replay_outlined, size: 30, color: Colors.white,),
+          Icon(Icons.replay_outlined, size: 30, color: Colors.white.withOpacity(0.4),),
+          Icon(Icons.replay_outlined, size: 30, color: Colors.white.withOpacity(0.4),),
+          Icon(Icons.replay_outlined, size: 30, color: Colors.white.withOpacity(0.4),),
+          Icon(Icons.replay_outlined, size: 30, color: Colors.white.withOpacity(0.4),),
 
         ],
       ),
