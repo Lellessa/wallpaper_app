@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wallpaper_app/pages/wallpaper_widgets/back_button.dart';
 import 'package:wallpaper_app/pages/wallpaper_widgets/item.dart';
 
 class WallpaperPage extends StatelessWidget {
@@ -23,10 +24,7 @@ class WallpaperPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
 
-            GestureDetector(
-              onTap: () => Navigator.pop(context),
-              child: Icon(Icons.arrow_back, size: 35, color: Colors.white,),
-            ),
+            MainBackButton(),
 
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
