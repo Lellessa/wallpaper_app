@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:wallpaper_app/pages/wallpaper.dart';
 
 void main() async {
   runApp(MyApp());
@@ -141,18 +142,21 @@ class MainCard extends StatelessWidget {
 
     final double y = getRandom();
 
-    return AspectRatio(
-      aspectRatio: 1/y,
-      child: Container(
-        margin: EdgeInsets.only(bottom: 15),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          image: DecorationImage(
-            fit: BoxFit.cover,
-            image: AssetImage(
-              this.image
-            ),
-          )
+    return GestureDetector(
+      onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context)=>WallpaperPage(image: this.image,))),
+      child: AspectRatio(
+        aspectRatio: 1/y,
+        child: Container(
+          margin: EdgeInsets.only(bottom: 15),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            image: DecorationImage(
+              fit: BoxFit.cover,
+              image: AssetImage(
+                this.image
+              ),
+            )
+          ),
         ),
       ),
     );
