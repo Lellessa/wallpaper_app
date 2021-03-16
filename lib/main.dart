@@ -1,8 +1,6 @@
-import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:wallpaper_app/pages/home.dart';
-import 'package:wallpaper_app/pages/wallpaper.dart';
 
 void main() async {
   runApp(MyApp());
