@@ -3,8 +3,8 @@ import 'package:wallpaper_app/pages/wallpaper_widgets/back_button.dart';
 import 'package:wallpaper_app/pages/wallpaper_widgets/item.dart';
 
 class WallpaperPage extends StatelessWidget {
-  final String image;
-  WallpaperPage({this.image}); 
+  final String url;
+  WallpaperPage({this.url}); 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,7 +15,7 @@ class WallpaperPage extends StatelessWidget {
         decoration: BoxDecoration(
           image: DecorationImage(
             fit: BoxFit.cover,
-            image: AssetImage(this.image)
+            image: NetworkImage(this.url)
           )
         ),
 

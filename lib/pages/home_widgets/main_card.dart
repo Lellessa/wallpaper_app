@@ -5,8 +5,8 @@ import 'package:wallpaper_app/pages/wallpaper.dart';
 
 class MainCard extends StatelessWidget {
 
-  final String image;
-  MainCard({this.image = 'assets/wall_1.jpg'});
+  final String url;
+  MainCard({this.url = 'assets/wall_1.jpg'});
 
   static double getRandom() {
     final double y = Random().nextInt(250)/100;
@@ -22,7 +22,7 @@ class MainCard extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return GestureDetector(
-      onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context)=>WallpaperPage(image: this.image,))),
+      onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context)=>WallpaperPage(url: this.url,))),
       child: AspectRatio(
         aspectRatio: 1/y,
         child: Container(
@@ -31,9 +31,7 @@ class MainCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(10),
             image: DecorationImage(
               fit: BoxFit.cover,
-              image: AssetImage(
-                this.image
-              ),
+              image: NetworkImage(url)
             )
           ),
         ),
